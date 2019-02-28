@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,18 @@ public class UserController {
 	@GetMapping(value="/age/{age}")
 	public List<User> getUserByAge(@PathVariable("age") int age) {
 		return userService.getUserByAge(age);
+	}
+	
+	@PutMapping(value="/name")
+	public String updateUsersName(@RequestBody User user) {
+		userService.fetchAndUpdateFirstNameAndLastName(user.getId());
+		return "Updated successfully";
+	}
+	
+	@PutMapping(value="")
+	public String updateUser(@RequestBody User user) {
+		userService.updateUser(user);
+		return "Updated successfully";
 	}
 
 }
