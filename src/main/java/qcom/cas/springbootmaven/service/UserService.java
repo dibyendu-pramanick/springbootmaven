@@ -51,6 +51,7 @@ public class UserService {
 	public void updateFirstName() {
 		ThreadContext threadContext = UserThreadContext.get();
 		userRepository.updateFirstName(threadContext.getUser().getId(), threadContext.getUser().getFirstName().toUpperCase());
+		UserThreadContext.clear();
 	}
 
 }

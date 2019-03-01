@@ -13,4 +13,8 @@ public class UserThreadContext {
 	public static ThreadContext get() {
 		return CONTEXT.get();
 	}
+	
+	public static void clear() {
+		CONTEXT.remove();
+	}
 }
