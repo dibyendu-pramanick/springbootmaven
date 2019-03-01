@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import qcom.cas.springbootmaven.Model.User;
 import qcom.cas.springbootmaven.service.UserService;
+import qcom.cas.springbootmaven.util.ThreadContext;
+import qcom.cas.springbootmaven.util.UserThreadContext;
 
 @RestController
 @RequestMapping("user")
@@ -50,6 +52,17 @@ public class UserController {
 	@PutMapping(value="")
 	public String updateUser(@RequestBody User user) {
 		userService.updateUser(user);
+		return "Updated successfully";
+	}
+	
+	@PutMapping(value="/firstname")
+	public String updateUsersFirstName(@RequestBody User user) {
+		User userFromDb = userService.getUser(user.getId());
+		if(userFromDb != null) {
+			ThreadContext threadContext = UserThreadContext.get();
+			threadContext.setUser(userFromDb);
+			userService.updateFirstName();
+		}
 		return "Updated successfully";
 	}
 

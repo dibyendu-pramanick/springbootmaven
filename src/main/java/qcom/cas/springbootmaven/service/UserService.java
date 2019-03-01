@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import qcom.cas.springbootmaven.Model.User;
 import qcom.cas.springbootmaven.repository.UserRepository;
+import qcom.cas.springbootmaven.util.ThreadContext;
+import qcom.cas.springbootmaven.util.UserThreadContext;
 
 @Service
 public class UserService {
@@ -43,6 +45,12 @@ public class UserService {
 			userRepository.updateFirstName(user.getId(), user.getFirstName().toUpperCase());
 			userRepository.updateLastName(user.getId(), user.getLastName().toUpperCase());
 		}
+	}
+	
+	@Transactional
+	public void updateFirstName() {
+		ThreadContext threadContext = UserThreadContext.get();
+		userRepository.updateFirstName(threadContext.getUser().getId(), threadContext.getUser().getFirstName().toUpperCase());
 	}
 
 }
